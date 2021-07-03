@@ -1,0 +1,27 @@
+.visualizer-container {
+    display: flex;
+    flex-flow: column;
+}
+
+.button-container {
+    margin-top: 5%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.array-container {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    margin-top: 5%;
+    margin-bottom: 5%;
+}
+
+.array-bar {
+    width: 2px;
+    background-color: pink;
+    display: inline-block;
+    margin: 0 1px 0 1px;
+    height: 600px;
+}
