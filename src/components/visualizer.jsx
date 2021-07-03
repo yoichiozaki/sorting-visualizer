@@ -3,8 +3,8 @@ import './visualizer.css';
 import '../algo/algo';
 import { doBubbleSort, doHeapSort, doMergeSort, doQuickSort } from '../algo/algo';
 
-const ANIMATION_SPEED_MS = 1;
-const ARRAY_SIZE = 200;
+const ANIMATION_SPEED_MS = 1000;
+const ARRAY_SIZE = 10;
 
 export default class Visualizer extends React.Component {
     constructor(props) {
@@ -40,7 +40,8 @@ export default class Visualizer extends React.Component {
         //     if (b < a) return 1;
         //     return 0;
         // });
-        const sortingAnimations = doBubbleSort(this.state.array.slice());
+        // const sortingAnimations = doBubbleSort(this.state.array.slice());
+        const sortingAnimations = doBubbleSort(this.state.array);
         // const sortedArray = sortingAnimations[sortingAnimations.length - 1]["result"];
 
         // console.log(isSame(jsSortedArray, sortedArray));
@@ -131,10 +132,42 @@ export default class Visualizer extends React.Component {
             if (b < a) return 1;
             return 0;
         });
-        const sortingAnimations = doMergeSort(this.state.array.slice());
+        // const sortedArray = doMergeSort(this.state.array.slice());
+        // const sortingAnimations = doMergeSort(this.state.array.slice());
+        const sortingAnimations = doMergeSort(this.state.array);
         const sortedArray = sortingAnimations[sortingAnimations.length - 1]["result"];
 
         console.log(isSame(jsSortedArray, sortedArray));
+        console.log(sortingAnimations);
+        const arrayBars = document.getElementsByClassName('array-bar');
+        for (let i = 0; i < sortingAnimations.length; i++) {
+            const animation = sortingAnimations[i];
+            switch (animation["operation"]) {
+                case "merge":
+                    // const mbar1Idx = animation["target"][0][0];
+                    // const mbar1Height = animation["target"][0][1];
+                    // const mbar1Style = arrayBars[mbar1Idx].style;
+                    // const mbar2Idx = animation["target"][1][0];
+                    // const mbar2Height = animation["target"][1][1];
+                    // const mbar2Style = arrayBars[mbar2Idx].style;
+                    // setTimeout(() => {
+                    //     mbar1Style.backgroundColor = "red";
+                    //     mbar1Style.height = `${mbar2Height}px`;
+                    //     mbar2Style.backgroundColor = "red";
+                    //     mbar2Style.height = `${mbar1Height}px`;
+                    // }, i * ANIMATION_SPEED_MS);
+                    // setTimeout(() => {
+                    //     mbar1Style.backgroundColor = "pink";
+                    //     mbar2Style.backgroundColor = "pink";
+                    // }, (i + 1) * ANIMATION_SPEED_MS);
+                    break;
+                case "fix":
+                    break;
+                default:
+                    console.log("Error: must not reach here");
+                    break;
+            }
+        }
     }
 
     quickSort() {
@@ -144,7 +177,8 @@ export default class Visualizer extends React.Component {
         //     return 0;
         // });
 
-        const sortingAnimations = doQuickSort(this.state.array.slice());
+        // const sortingAnimations = doQuickSort(this.state.array.slice());
+        const sortingAnimations = doQuickSort(this.state.array);
         // const sortedArray = sortingAnimations[sortingAnimations.length - 1]["result"];
 
         // console.log(isSame(jsSortedArray, sortedArray));
@@ -249,15 +283,16 @@ export default class Visualizer extends React.Component {
     }
 
     heapSort() {
-        const jsSortedArray = this.state.array.slice().sort((a, b) => {
-            if (a < b) return -1;
-            if (b < a) return 1;
-            return 0;
-        });
-        const sortingAnimations = doHeapSort(this.state.array.slice());
-        const sortedArray = sortingAnimations[sortingAnimations.length - 1]["result"];
+        // const jsSortedArray = this.state.array.slice().sort((a, b) => {
+        //     if (a < b) return -1;
+        //     if (b < a) return 1;
+        //     return 0;
+        // });
+        // const sortingAnimations = doHeapSort(this.state.array.slice());
+        const sortingAnimations = doHeapSort(this.state.array);
+        // const sortedArray = sortingAnimations[sortingAnimations.length - 1]["result"];
 
-        console.log(isSame(jsSortedArray, sortedArray));
+        // console.log(isSame(jsSortedArray, sortedArray));
 
         const arrayBars = document.getElementsByClassName('array-bar');
         for (let i = 0; i < sortingAnimations.length - 1; i++) {
