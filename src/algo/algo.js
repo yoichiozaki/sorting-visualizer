@@ -105,8 +105,52 @@ export function doQuickSort(array) {
     return animations;
 }
 
-export function doHeapSort() {
-    // console.log("quickSort");
+export function doHeapSort(array) {
+    let arrayLength = array.length;
+
+    let animations = [];
+
+    const buildHeap = (array, i) => {
+        let left = 2 * i + 1;
+        let right = 2 * i + 2;
+        let max = i;
+
+        if (left < arrayLength && array[max] < array[left]) {
+            max = left;
+        }
+
+        if (right < arrayLength && array[max] < array[right]) {
+            max = right;
+        }
+
+        if (max != i) {
+            animations.push({ "operation": "swap", "target": [[i, array[i]], [max, array[max]]] });
+            let tmp = array[i];
+            array[i] = array[max];
+            array[max] = tmp;
+
+            buildHeap(array, max);
+        }
+    };
+
+    for (let i = Math.floor(arrayLength / 2); 0 <= i; i -= 1) {
+        buildHeap(array, i);
+    }
+
+    for (let i = arrayLength - 1; 0 < i; i -= 1) {
+        animations.push({ "operation": "swap", "target": [[0, array[0]], [i, array[i]]] });
+        let tmp = array[0];
+        array[0] = array[i];
+        array[i] = tmp;
+        animations.push({ "operation": "fix", "target": [i] });
+        arrayLength -= 1;
+        buildHeap(array, 0);
+    }
+    animations.push({ "operation": "fix", "target": [0] });
+    animations.push({ "result": array });
+    console.log(array);
+
+    return animations;
 }
 
 export function doMergeSort() {

@@ -104,26 +104,26 @@ export default class Visualizer extends React.Component {
         // }, (sortingAnimations.length + 1) * 10);
     }
 
-    testBubbleSort() {
-        for (let _ = 0; _ < 1; _++) {
-            const array = [];
+    // testBubbleSort() {
+    //     for (let _ = 0; _ < 1; _++) {
+    //         const array = [];
 
-            for (let i = 0; i < 20; i++) {
-                let element = randomIntegerRange(5, 600);
-                array.push(element);
-            }
+    //         for (let i = 0; i < 20; i++) {
+    //             let element = randomIntegerRange(5, 600);
+    //             array.push(element);
+    //         }
 
-            const jsSortedArray = array.slice().sort((a, b) => {
-                if (a < b) return -1;
-                if (b < a) return 1;
-                return 0;
-            });
-            const sortingAnimations = doBubbleSort(array.slice());
-            const sortedArray = sortingAnimations[sortingAnimations.length - 1]["result"];
+    //         const jsSortedArray = array.slice().sort((a, b) => {
+    //             if (a < b) return -1;
+    //             if (b < a) return 1;
+    //             return 0;
+    //         });
+    //         const sortingAnimations = doBubbleSort(array.slice());
+    //         const sortedArray = sortingAnimations[sortingAnimations.length - 1]["result"];
 
-            console.log(isSame(jsSortedArray, sortedArray));
-        }
-    }
+    //         console.log(isSame(jsSortedArray, sortedArray));
+    //     }
+    // }
 
     mergeSort() {
         const jsSortedArray = this.state.array.slice().sort((a, b) => {
@@ -258,6 +258,43 @@ export default class Visualizer extends React.Component {
         const sortedArray = sortingAnimations[sortingAnimations.length - 1]["result"];
 
         console.log(isSame(jsSortedArray, sortedArray));
+
+        const arrayBars = document.getElementsByClassName('array-bar');
+        for (let i = 0; i < sortingAnimations.length - 1; i++) {
+            const animation = sortingAnimations[i];
+            switch (animation["operation"]) {
+                case "swap":
+                    // console.log("swap");
+                    const sbar1Idx = animation["target"][0][0];
+                    const sbar1Height = animation["target"][0][1];
+                    const sbar2Idx = animation["target"][1][0];
+                    const sbar2Height = animation["target"][1][1];
+                    const sbar1Style = arrayBars[sbar1Idx].style;
+                    const sbar2Style = arrayBars[sbar2Idx].style;
+                    setTimeout(() => {
+                        sbar1Style.height = `${sbar2Height}px`
+                        sbar2Style.height = `${sbar1Height}px`
+                        sbar1Style.backgroundColor = "green";
+                        sbar2Style.backgroundColor = "green";
+                    }, i * ANIMATION_SPEED_MS);
+                    setTimeout(() => {
+                        sbar1Style.backgroundColor = "pink";
+                        sbar2Style.backgroundColor = "pink";
+                    }, (i + 1) * ANIMATION_SPEED_MS);
+                    break;
+                case "fix":
+                    // console.log("fix");
+                    const fbarIdx = animation["target"][0];
+                    const fbarStyle = arrayBars[fbarIdx].style;
+                    setTimeout(() => {
+                        fbarStyle.backgroundColor = "turquoise";
+                    }, i * ANIMATION_SPEED_MS);
+                    break;
+                default:
+                    console.log("Error: must not reach here");
+                    break;
+            }
+        }
     }
 
     render() {
@@ -271,7 +308,7 @@ export default class Visualizer extends React.Component {
                     <button onClick={() => this.mergeSort()}>Merge Sort</button>
                     <button onClick={() => this.quickSort()}>Quick Sort</button>
                     <button onClick={() => this.heapSort()}>Heap Sort</button>
-                    <button onClick={() => this.testBubbleSort()}>Test Bubble Sort</button>
+                    {/* <button onClick={() => this.testBubbleSort()}>Test Bubble Sort</button> */}
                 </div>
                 <div className="array-container">
                     {array.map((value, idx) => (
